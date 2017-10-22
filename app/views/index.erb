@@ -27,9 +27,20 @@ Got something to Peep about? Then sign in or sign up<br>
 <div id="peep_deck">
 <ul>
 <% @peep_deck.each do |peep| %>
-<li> Peep: <%= peep.message %> <br>
-Time: <%= peep.created_at %><br>
-Author: <%= User.get(peep.user_id).username %><br>
+<li> "<%= peep.message %>,"<br>
+  peeped <%= User.get(peep.user_id).username %> at <%= peep.created_at %><br>
+<br>
+
+<% that = peep.message.split(/[#]\S+/) %>
+<%= that %><br>
+
+<% this = peep.tags.map {|tag| tag.name }%>
+<%= this %>
+<% this.map! do |tag| %>
+<a href="/tags/<%=tag[1..-1]%>"><%= tag%></a>
+<br>
+<% end %>
+
 </li>
 <% end unless @peep_deck.empty? %>
 </ul>
